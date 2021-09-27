@@ -51,14 +51,11 @@ class FitxerImatge(fEnt: File) {
          */
         fileInStream.close()
         fileOutStream.close()
-        // Transformar a negatiiu i guardar en _n.bmp
-
     }
 
     fun transformaObscur() {
         val fileInStream = FileInputStream(file)
         val fileOutStream = FileOutputStream(file.nameWithoutExtension.plus("_o.bmp"))
-        // Transformar a una imatge més fosca i guardar en _o.bmp
         for (i in 0..53){
             fileOutStream.write(fileInStream.read())
         }
@@ -83,21 +80,22 @@ class FitxerImatge(fEnt: File) {
         var byteR = fileInStream.read()
         var byteG = fileInStream.read()
         var byteB = fileInStream.read()
+        //Calculamos la media de los bytes
+        val byteAverage = (byteR+byteG+byteB)/3
         while (byteR != -1){
             /*
             Debemos escribir tres veces, una por cada byte,
             de no hacerlo la imagen seria un tercio del tamaño original
              */
-            fileOutStream.write((byteR+byteG+byteB)/3)
-            fileOutStream.write((byteR+byteG+byteB)/3)
-            fileOutStream.write((byteR+byteG+byteB)/3)
+            fileOutStream.write(byteAverage)
+            fileOutStream.write(byteAverage)
+            fileOutStream.write(byteAverage)
             byteR = fileInStream.read()
             byteG = fileInStream.read()
             byteB = fileInStream.read()
         }
         fileInStream.close()
         fileOutStream.close()
-        // Transformar a una imatge en blanc i negre i guardar en _bn.bmp
     }
 }
 
