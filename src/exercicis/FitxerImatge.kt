@@ -77,16 +77,23 @@ class FitxerImatge(fEnt: File) {
         for (i in 0..53){
             fileOutStream.write(fileInStream.read())
         }
+        /*
+        Asignamos un byte a cada color
+         */
         var byteR = fileInStream.read()
         var byteG = fileInStream.read()
         var byteB = fileInStream.read()
-        var byteAverage = (byteR+byteG+byteB)/3
-        while (byteR !=  -1 && byteG != -1 && byteB != -1){
-            fileOutStream.write(byteAverage)
+        while (byteR != -1){
+            /*
+            Debemos escribir tres veces, una por cada byte,
+            de no hacerlo la imagen seria un tercio del tamaño original
+             */
+            fileOutStream.write((byteR+byteG+byteB)/3)
+            fileOutStream.write((byteR+byteG+byteB)/3)
+            fileOutStream.write((byteR+byteG+byteB)/3)
             byteR = fileInStream.read()
             byteG = fileInStream.read()
             byteB = fileInStream.read()
-            byteAverage = (byteR+byteG+byteB)/3
         }
         fileInStream.close()
         fileOutStream.close()
