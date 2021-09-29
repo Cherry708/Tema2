@@ -5,7 +5,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 
-class FitxerImatge(fEnt: File) {
+class Exercici_2_1(fEnt: File) {
     //Declaramos el objeto con el que operaremos
     var file: File = File("")
 
@@ -23,7 +23,15 @@ class FitxerImatge(fEnt: File) {
             throw IOException("Error en la entrada de datos.")
     }
 
-
+    /**
+     * Modifica los bytes de un fichero .bmp
+     * para transformar la imagen en negativo.
+     *
+     * Por cada byte posterior al 54 de la imagen
+     * original escribe en otro fichero,
+     * con el nombre original y terminado en "_n.bmp",
+     * 255-byte, donde byte es el byte de la imagen original.
+     */
     fun transformaNegatiu() {
         /*
         Los flujos se deben instanciar en el momento de ser usados
@@ -34,7 +42,7 @@ class FitxerImatge(fEnt: File) {
             fileOutStream.write(fileInStream.read())
         }
         /*
-        Como no hemos cerrado el flujo de datos el bucle while
+        Al no haber cerrado el flujo de datos el bucle while
         comenzara el byte 54, el que necesitamos
          */
         var byte = fileInStream.read()
@@ -53,6 +61,12 @@ class FitxerImatge(fEnt: File) {
         fileOutStream.close()
     }
 
+    /**
+     * Modifica los bytes de un fichero .bmp
+     * escribriendo en cada byte posterior al 54
+     * la mitad del byte leido sobre un fichero con
+     * el nombre original terminado en "_o.bmp"
+     */
     fun transformaObscur() {
         val fileInStream = FileInputStream(file)
         val fileOutStream = FileOutputStream(file.nameWithoutExtension.plus("_o.bmp"))
@@ -68,6 +82,11 @@ class FitxerImatge(fEnt: File) {
         fileOutStream.close()
     }
 
+    /**
+     * Modifica una imagen a blanco y negro leyendo
+     * tres bytes, obteniendo su media y escribiendo esta
+     * en otro fichero con el nombre original terminado en "_bn.bmp"
+     */
     fun transformaBlancNegre() {
         val fileInStream = FileInputStream(file)
         val fileOutStream = FileOutputStream(file.nameWithoutExtension.plus("_bn.bmp"))
@@ -80,16 +99,14 @@ class FitxerImatge(fEnt: File) {
         var byteR = fileInStream.read()
         var byteG = fileInStream.read()
         var byteB = fileInStream.read()
-        //Calculamos la media de los bytes
-        val byteAverage = (byteR+byteG+byteB)/3
         while (byteR != -1){
             /*
             Debemos escribir tres veces, una por cada byte,
             de no hacerlo la imagen seria un tercio del tamaño original
              */
-            fileOutStream.write(byteAverage)
-            fileOutStream.write(byteAverage)
-            fileOutStream.write(byteAverage)
+            fileOutStream.write((byteR+byteG+byteB)/3)
+            fileOutStream.write((byteR+byteG+byteB)/3)
+            fileOutStream.write((byteR+byteG+byteB)/3)
             byteR = fileInStream.read()
             byteG = fileInStream.read()
             byteB = fileInStream.read()
