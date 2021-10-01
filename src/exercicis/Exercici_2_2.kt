@@ -2,6 +2,10 @@ package exercicis
 
 import javax.swing.*
 import java.awt.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileReader
+import java.io.FileWriter
 
 class Exercici_2_2_Pantalla : JFrame() {
     val et_f = JLabel("Fitxer:")
@@ -38,13 +42,45 @@ class Exercici_2_2_Pantalla : JFrame() {
         pack()
 
         obrir.addActionListener {
-            // Instruccions per a bolcar el contingut del fitxer en el JTextArea
-
+            /*
+            Asignamos el texto del textField fitxer como ruta para file.
+            Comprobamos si existe el file con esta ruta existe, la extensión también se debe incluir.
+            En caso de que exista el fichero el componente textArea se ocupa con un string vacio.
+            Declaramos e instanciamos el flujo de datos y, mientras haya algo que leer, lo leemos y
+            añadimos al componente textArea.
+             */
+            val file = File(fitxer.getText())
+            try {
+                if (file.exists()) {
+                    area.text = ""
+                    val fileReader = FileReader(file)
+                    var c = fileReader.read()
+                    while (c != -1) {
+                        area.append(c.toChar().toString())
+                        c = fileReader.read()
+                    }
+                    fileReader.close()
+                } else JOptionPane.showMessageDialog(null,"No es posible acceder al fichero especificado.")
+            } catch (e:FileNotFoundException){}
         }
 
         guardar.addActionListener {
-            // Instruccions per a guardar el contingut del JTextArea al fitxer.
-
+            /*
+            Si se cumple que el campo fichero tiene nombre, abriremos el flujo de datos
+            y escribiremos todos los caracteres en el fichero especificado.
+             */
+            try{
+            if (fitxer.getText() != null){
+                val file = File(fitxer.getText())
+                val fileWriter = FileWriter(file)
+                for (c in area.getText()){
+                    fileWriter.write(c.toString())
+                }
+                fileWriter.close()
+            }
+            } catch (e:FileNotFoundException){
+                JOptionPane.showMessageDialog(null,"Debes especificar el fichero de salida.")
+            }
         }
     }
 }
