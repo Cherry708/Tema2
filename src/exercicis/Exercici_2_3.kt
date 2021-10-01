@@ -62,19 +62,22 @@ class Exercici_2_3 : JFrame() {
 
     fun obrir() {
         seleccionarFichero.showOpenDialog(null)
-        if (seleccionarFichero.selectedFile.isFile) {
-            this.title = "Editor de text més avançat"
-            val titulo = seleccionarFichero.selectedFile.name
-            this.title = this.title.plus(" - $titulo")
-            area.text = ""
-            val reader = FileReader(seleccionarFichero.selectedFile)
-            var c = reader.read()
-            while (c != -1) {
-                area.append(c.toChar().toString())
-                c = reader.read()
+        try {
+
+            if (seleccionarFichero.selectedFile.isFile) {
+                this.title = "Editor de text més avançat"
+                val titulo = seleccionarFichero.selectedFile.name
+                this.title = this.title.plus(" - $titulo")
+                area.text = ""
+                val reader = FileReader(seleccionarFichero.selectedFile)
+                var c = reader.read()
+                while (c != -1) {
+                    area.append(c.toChar().toString())
+                    c = reader.read()
+                }
+                reader.close()
             }
-            reader.close()
-        }
+        } catch (e: NullPointerException){}
         // Instruccions per a obrir un fitxer i posar el contingut en el JTextArea
 
     }
