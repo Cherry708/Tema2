@@ -15,6 +15,7 @@ class Exercici_2_3 : JFrame() {
 
     val menu_arxiu = JMenu("Arxiu")
     val menu_ajuda = JMenu("Ajuda")
+    val menu_charset = JMenu("Charset")
 
     val obrir = JMenuItem("Obrir")
     val seleccionarFichero = JFileChooser("")
@@ -23,6 +24,9 @@ class Exercici_2_3 : JFrame() {
     val eixir = JMenuItem("Eixir")
 
     val quantA = JMenuItem("Quant a Editor")
+
+    val charsetUtf8 = JMenuItem("UTF-8")
+    val charsetIso = JMenu("ISO-8859-15")
 
     val fCh = JFileChooser()
 
@@ -40,6 +44,7 @@ class Exercici_2_3 : JFrame() {
 
         menu_p.add(menu_arxiu)
         menu_p.add(menu_ajuda)
+        menu_p.add(menu_charset)
 
         menu_arxiu.add(obrir)
         menu_arxiu.add(guardar)
@@ -48,6 +53,9 @@ class Exercici_2_3 : JFrame() {
         menu_arxiu.add(eixir)
 
         menu_ajuda.add(quantA);
+
+        menu_charset.add(charsetUtf8)
+        menu_charset.add(charsetIso)
 
         obrir.addActionListener { obrir() }
 
