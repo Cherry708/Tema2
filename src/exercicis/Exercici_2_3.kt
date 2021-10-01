@@ -63,6 +63,7 @@ class Exercici_2_3 : JFrame() {
     fun obrir() {
         seleccionarFichero.showOpenDialog(null)
         if (seleccionarFichero.selectedFile.isFile) {
+            this.title = "Editor de text més avançat"
             val titulo = seleccionarFichero.selectedFile.name
             this.title = this.title.plus(" - $titulo")
             area.text = ""
@@ -93,12 +94,15 @@ class Exercici_2_3 : JFrame() {
     }
 
     fun guardarCom() {
-        seleccionarFichero.showSaveDialog(null)
-        val writer = FileWriter(File(seleccionarFichero.selectedFile.name))
-        for (c in area.text) {
-            writer.write(c.toString())
-        }
-        writer.close()
+        try {
+
+            seleccionarFichero.showSaveDialog(null)
+            val writer = FileWriter(File(seleccionarFichero.selectedFile.name))
+            for (c in area.text) {
+                writer.write(c.toString())
+            }
+            writer.close()
+        } catch (e: NullPointerException){}
 
         // Instruccions per a guardar el contingut del JTextArea al fitxer, amb la possibilitat de canviar el nom
 
@@ -110,7 +114,11 @@ class Exercici_2_3 : JFrame() {
     }
 
     fun quantA() {
+        val mensaje = "Editor de texto avanzado escrito en Kotlin, widgets generados mediante la biblioteca Swing."
+        val autor = "Autor: Ruben Serrano"
         // Instruccions per a mostrar un diàleg amb la versió (Acerca de...)
+        JOptionPane.showMessageDialog(null,mensaje.plus(" $autor"),
+            "Sobre Editor avanzado", JOptionPane.INFORMATION_MESSAGE)
 
     }
 }
