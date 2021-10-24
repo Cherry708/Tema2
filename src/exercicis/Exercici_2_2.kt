@@ -60,8 +60,9 @@ class Exercici_2_2_Pantalla : JFrame() {
                         c = fileReader.read()
                     }
                     fileReader.close()
-                } else JOptionPane.showMessageDialog(null,"No es posible acceder al fichero especificado.")
-            } catch (e:FileNotFoundException){}
+                } else JOptionPane.showMessageDialog(null, "No es posible acceder al fichero especificado.")
+            } catch (e: FileNotFoundException) {
+            }
         }
 
         guardar.addActionListener {
@@ -69,17 +70,15 @@ class Exercici_2_2_Pantalla : JFrame() {
             Si se cumple que el campo fichero tiene nombre, abriremos el flujo de datos
             y escribiremos todos los caracteres en el fichero especificado.
              */
-            try{
-            if (fitxer.getText() != null){
-                val file = File(fitxer.getText())
-                val fileWriter = FileWriter(file)
-                for (c in area.getText()){
-                    fileWriter.write(c.toString())
+            try {
+                if (fitxer.getText() != null) {
+                    val file = File(fitxer.getText())
+                    val fileWriter = FileWriter(file)
+                    fileWriter.write(area.text)
+                    fileWriter.close()
                 }
-                fileWriter.close()
-            }
-            } catch (e:FileNotFoundException){
-                JOptionPane.showMessageDialog(null,"Debes especificar el fichero de salida.")
+            } catch (e: FileNotFoundException) {
+                JOptionPane.showMessageDialog(null, "Debes especificar el fichero de salida.")
             }
         }
     }
