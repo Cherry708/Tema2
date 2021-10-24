@@ -18,7 +18,7 @@ class Exercici_2_3 : JFrame() {
     val menu_charset = JMenu("Charset")
 
     val obrir = JMenuItem("Obrir")
-    val seleccionarFichero = JFileChooser("")
+    val seleccionarFichero = JFileChooser(".")
     val guardar = JMenuItem("Guardar")
     val guardarCom = JMenuItem("Guardar com ...")
     val eixir = JMenuItem("Eixir")
@@ -77,12 +77,16 @@ class Exercici_2_3 : JFrame() {
                 val titulo = seleccionarFichero.selectedFile.name
                 this.title = this.title.plus(" - $titulo")
                 area.text = ""
+                //Escritura mediante FileReader, más lenta
                 val reader = FileReader(seleccionarFichero.selectedFile)
                 var c = reader.read()
                 while (c != -1) {
                     area.append(c.toChar().toString())
                     c = reader.read()
                 }
+                //Escritura mediante simplificación Kotlin
+                val file = File(seleccionarFichero.selectedFile.name)
+                area.text = file.readText()
                 reader.close()
             }
         } catch (e: NullPointerException){}
@@ -93,10 +97,8 @@ class Exercici_2_3 : JFrame() {
     fun guardar() {
         try {
             if (seleccionarFichero.selectedFile.exists()) {
-                val writer = FileWriter(File(seleccionarFichero.selectedFile.name))
-                for (c in area.text) {
-                    writer.write(c.toString())
-                }
+                val writer = FileWriter(seleccionarFichero.selectedFile)
+                writer.write(area.text)
                 writer.close()
             }         // Instruccions per a guardar el contingut del JTextArea al fitxer.
         } catch (e: NullPointerException) {
@@ -108,7 +110,7 @@ class Exercici_2_3 : JFrame() {
         try {
 
             seleccionarFichero.showSaveDialog(null)
-            val writer = FileWriter(File(seleccionarFichero.selectedFile.name))
+            val writer = FileWriter(seleccionarFichero.selectedFile.name)
             for (c in area.text) {
                 writer.write(c.toString())
             }
